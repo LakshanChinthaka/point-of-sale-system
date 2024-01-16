@@ -1,10 +1,12 @@
 package com.chinthaka.pointofsalesystem.entity;
 
 import com.chinthaka.pointofsalesystem.enums.Gender;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 
 @Entity
 @NoArgsConstructor

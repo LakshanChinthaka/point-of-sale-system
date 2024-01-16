@@ -1,4 +1,4 @@
-package com.chinthaka.pointofsalesystem.dto;
+package com.chinthaka.pointofsalesystem.dto.Cutomer;
 
 import com.chinthaka.pointofsalesystem.enums.Gender;
 import lombok.AllArgsConstructor;
