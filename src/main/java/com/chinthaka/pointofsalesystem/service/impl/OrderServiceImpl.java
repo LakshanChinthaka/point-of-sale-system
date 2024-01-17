@@ -1,7 +1,11 @@
 package com.chinthaka.pointofsalesystem.service.impl;
 
 
+import com.chinthaka.pointofsalesystem.Mapper.OrderMapper;
 import com.chinthaka.pointofsalesystem.dto.order.RequestOrderSaveDto;
+import com.chinthaka.pointofsalesystem.dto.order.response.AllOrdersByCustomerDto;
+import com.chinthaka.pointofsalesystem.dto.paginated.PaginatedResponse;
+import com.chinthaka.pointofsalesystem.dto.query.GetOrderDetailsByCustomer;
 import com.chinthaka.pointofsalesystem.entity.Customer;
 import com.chinthaka.pointofsalesystem.entity.Order;
 import com.chinthaka.pointofsalesystem.entity.OrderDetails;
@@ -13,10 +17,10 @@ import com.chinthaka.pointofsalesystem.repo.ItemRepo;
 import com.chinthaka.pointofsalesystem.repo.OrderDetailsRepo;
 import com.chinthaka.pointofsalesystem.repo.OrderRepo;
 import com.chinthaka.pointofsalesystem.service.OrderService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,13 +33,15 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepo customerRepo;
     private final OrderRepo orderRepo;
     private final OrderDetailsRepo orderDetailsRepo;
+    private final OrderMapper orderMapper;
 
-    public OrderServiceImpl(ItemRepo itemRepo, CustomerRepo customerRepo, OrderRepo orderRepo, OrderDetailsRepo orderDetailsRepo) {
+    public OrderServiceImpl(ItemRepo itemRepo, CustomerRepo customerRepo, OrderRepo orderRepo, OrderDetailsRepo orderDetailsRepo, OrderMapper orderMapper) {
         this.itemRepo = itemRepo;
         this.customerRepo = customerRepo;
 
         this.orderRepo = orderRepo;
         this.orderDetailsRepo = orderDetailsRepo;
+        this.orderMapper = orderMapper;
     }
 
     @Override
@@ -78,5 +84,25 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e){
             throw new handleException("Something went wrong");
         }
+    }
+
+    @Override
+    public PaginatedResponse placeOrder(Integer customerId, int page, int size) {
+        if (null == customerId){
+            throw new NotFoundException("Customer Id not provide");
+        }
+        boolean customer = customerRepo.findById(customerId).isPresent();
+        if (!customer){
+            throw new NotFoundException("Customer Not found");
+        }
+        List<GetOrderDetailsByCustomer> getOrderDetailsByCustomers = orderRepo
+                .getOrderDetailsByCustomers(customerId,PageRequest.of(page,size));
+
+        List<AllOrdersByCustomerDto> allOrdersByCustomerDtos = orderMapper.list(getOrderDetailsByCustomers);
+        return new PaginatedResponse(
+                allOrdersByCustomerDtos,
+                allOrdersByCustomerDtos.size(),
+                0
+        );
     }
 }

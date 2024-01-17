@@ -3,6 +3,8 @@ package com.chinthaka.pointofsalesystem.Mapper;
 import com.chinthaka.pointofsalesystem.dto.order.OrderSaveDto;
 import com.chinthaka.pointofsalesystem.dto.order.RequestOrderDetailsSave;
 import com.chinthaka.pointofsalesystem.dto.order.RequestOrderSaveDto;
+import com.chinthaka.pointofsalesystem.dto.order.response.AllOrdersByCustomerDto;
+import com.chinthaka.pointofsalesystem.dto.query.GetOrderDetailsByCustomer;
 import com.chinthaka.pointofsalesystem.entity.Item;
 import com.chinthaka.pointofsalesystem.entity.Order;
 import com.chinthaka.pointofsalesystem.entity.OrderDetails;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
+
+    List<AllOrdersByCustomerDto> list(List<GetOrderDetailsByCustomer> getOrderDetailsByCustomers);
 
 //    OrderSaveDto requestOrderSaveDtoToEntity(RequestOrderSaveDto requestOrderSaveDto);
 
