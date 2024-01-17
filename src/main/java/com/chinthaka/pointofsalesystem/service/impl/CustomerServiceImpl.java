@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public String updateCustomer(CustomerUpdateDto customerUpdateDto) {
         if (customerRepo.existsById(customerUpdateDto.getCustomerID())) {
-            Customer customer = customerRepo.findById(customerUpdateDto.getCustomerID()).get();
+            final Customer customer = customerRepo.findById(customerUpdateDto.getCustomerID()).get();
             customerMapper.entityToUpdateCustomerDto(customerUpdateDto, customer);
             customerRepo.save(customer);
             return "Customer Id - " + customerUpdateDto.getCustomerID() + " Update Successfully";
@@ -79,7 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public String deleteCustomer(Integer customerId) {
         if (customerRepo.existsById(customerId)) {
-            Customer customer = customerRepo.findById(customerId).get();
+            final Customer customer = customerRepo.findById(customerId).get();
             customer.setActiveStatus(false);
             customerRepo.save(customer);
             return "Customer Id - " + customerId + " Successfully deleted";
@@ -101,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDto> filterByAddress(String address, boolean status) {
         if (!address.isEmpty()) {
-            List<Customer> customer = customerRepo.findByCustomerAddressIgnoreCaseAndActiveStatus(address,status);
+            final List<Customer> customer = customerRepo.findByCustomerAddressIgnoreCaseAndActiveStatus(address,status);
            if (!customer.isEmpty()){
                return customerMapper.entityListToCustomerDtoList(customer);
            }else {

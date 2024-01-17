@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AppWideExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<StandardResponse> handleException(Exception e){
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(
+                        500,"Error",e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(UserAlreadyExistException.class)
     public ResponseEntity<StandardResponse> handlerUserAlreadyExist(UserAlreadyExistException e){
         return new ResponseEntity<StandardResponse>(
@@ -24,7 +31,7 @@ public class AppWideExceptionHandler {
     public ResponseEntity<StandardResponse> handlerNotFoundException(NotFoundException e){
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(
-                        400,"Error",e.getMessage()),HttpStatus.BAD_REQUEST);
+                        404,"Error",e.getMessage()),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ValidationException.class)

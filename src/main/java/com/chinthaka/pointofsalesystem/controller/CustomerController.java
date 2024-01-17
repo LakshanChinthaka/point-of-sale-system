@@ -3,8 +3,10 @@ package com.chinthaka.pointofsalesystem.controller;
 import com.chinthaka.pointofsalesystem.dto.Cutomer.CustomerDto;
 import com.chinthaka.pointofsalesystem.dto.paginated.PaginatedGetAllCustomer;
 import com.chinthaka.pointofsalesystem.dto.Cutomer.request.CustomerUpdateDto;
+import com.chinthaka.pointofsalesystem.entity.Customer;
 import com.chinthaka.pointofsalesystem.service.CustomerService;
 import com.chinthaka.pointofsalesystem.util.StandardResponse;
+import jakarta.validation.constraints.Max;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +82,7 @@ public class CustomerController {
 
     @GetMapping(path = "/get-all-customer-page",params = {"page","size"})
     public ResponseEntity<StandardResponse> getAllCustomer(
-            @RequestParam(name = "page") int page, @RequestParam(name = "size") int size
+            @RequestParam(name = "page") int page, @RequestParam(name = "size") @Max(50) int size
     ){
         PaginatedGetAllCustomer paginatedGetAllCustomers = customerService
                 .getAllCustomer(page,size);
