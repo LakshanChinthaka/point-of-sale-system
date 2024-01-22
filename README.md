@@ -18,7 +18,7 @@ Introducing our Point of Sale (POS) system, a user-friendly application simplify
 ## Database diagram
 ![db_pos](https://github.com/LakshanChinthaka/point-of-sale-system/assets/115285758/786f8293-a8e9-4cf5-9285-c6f6eaf0a057)
 
-## API endpoint and
+## API endpoint and Code
 ### All Controllers
 ![home](https://github.com/LakshanChinthaka/point-of-sale-system/assets/115285758/d0387497-08f1-4091-9714-513f03a9fa1b)
 
